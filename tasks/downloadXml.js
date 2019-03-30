@@ -18,27 +18,18 @@ async function downloadZip(data){
     });
 }
 
-
-// async function downloadZip(data){
-//     const file = fs.createWriteStream("./arquivo.zip");
-//     var req = request(
-//         {
-//             method: 'GET',
-//             uri: data.xmlUrl
-//         }
-//     );
-//     req.pipe(file);
-//     req.on('end', () => {
-//         unzipFile(data.numeroRevista);
-//     });
-// }
-
 async function unzipFile(numeroRevista){
     const zip = new AdmZip("./arquivo.zip");
     zip.extractEntryTo(`Contratos_${numeroRevista}.xml`, "./arquivo", false, true);
 }
 
+function getXml(numeroRevista){
+    const data = fs.readFileSync(`./arquivo/Contratos_${numeroRevista}.xml`, 'utf-8');
+    return data.toString();
+}
+
 module.exports = async (data) => {
     await downloadZip(data);
     await unzipFile(data.numeroRevista);
+    return getXml(data.numeroRevista);
 };

@@ -1,22 +1,17 @@
 const tasks = {
     extractData: require('./tasks/extractData.js'),
     downloadXml: require('./tasks/downloadXml.js'),
-    xmlToObject: require('./tasks/xmlToObject.js')
+    convertXmlToObject: require('./tasks/convertXmlToObject.js'),
+    filterDespachos: require('./tasks/filterDespachos.js'),
 }
-
 
 async function start(){
     const data = await tasks.extractData();
-    await tasks.downloadXml(data);
-    //const objeto = tasks.xmlToObject(xml);
-    console.log(data);
+    const xml = await tasks.downloadXml(data);
+    const objeto = tasks.convertXmlToObject(xml);
+    const despachos = tasks.filterDespachos(objeto.revista.despacho);
+    console.log(despachos);
+    //console.log(despachos.length);
 }
 
 start();
-
-// const listaDespachos = objeto.revista.despacho;
-// listaDespachos.map(despacho => {
-//     if (despacho.codigo == 350){
-//         console.log(despacho.titulo);
-//     }
-// })

@@ -1,21 +1,29 @@
 function sanitizeCedente(itemCedente){
     return {
-        nome: itemCedente.cedente.nomeCompleto.$t,
-        pais: itemCedente.cedente.endereco.pais.nome.$t
+        nome: itemCedente.nomeCompleto != undefined ? itemCedente.nomeCompleto.$t : null,
+        pais: itemCedente.endereco != undefined ? itemCedente.endereco.pais.nome.$t : null
     }
 }
 
 function sanitizeCessionaria(itemCessionaria){
     return {
-        nome: itemCessionaria.cessionaria.nomeCompleto.$t,
-        pais: itemCessionaria.cessionaria.endereco.pais.nome.$t,
-        setor: itemCessionaria.cessionaria.setor.$t
+        nome: itemCessionaria.nomeCompleto.$t,
+        pais: itemCessionaria.endereco.pais.nome.$t,
+        setor: itemCessionaria.setor.$t
     }
 }
 
 function sanitizePrazoVigencia(item){
     if (item.certificado.prazoVigenciaPI != undefined ){
         return item.certificado.prazoVigenciaPI.$t;
+    } else {
+        return null;
+    }
+}
+
+function sanitizeDescricaoMoeda(item){
+    if (item.certificado.descricaoMoeda != undefined){
+        return item.certificado.descricaoMoeda.$t
     } else {
         return null;
     }
@@ -35,7 +43,7 @@ function sanitizeCertificado(itemCertificado){
         naturezaDocumento: itemCertificado.certificado.naturezaDocumento.$t,
         textoObjeto: itemCertificado.certificado.textoObjeto.$t,
         siglaCategoria: itemCertificado.certificado.siglaCategoria.$t,
-        descricaoMoeda: itemCertificado.certificado.descricaoMoeda.$t,
+        descricaoMoeda: sanitizeDescricaoMoeda(itemCertificado),
         valorContrato: itemCertificado.certificado.valorContrato.$t,
         prazoContrato: itemCertificado.certificado.prazoContrato.$t,
         prazoVigenciaPI: sanitizePrazoVigencia(itemCertificado),
@@ -44,21 +52,21 @@ function sanitizeCertificado(itemCertificado){
 }
 
 function getCedente(cedentes){
-    const cedente = [];
-    if (Array.isArray(cedentes)){
-        cedente = cedentes.map(item => sanitizeCedente(item));
+    let cedente = [];
+    if (Array.isArray(cedentes.cedente)){
+        cedente = cedentes.cedente.map(item => sanitizeCedente(item));
     } else {
-        cedente.push(sanitizeCedente(cedentes));
+        cedente.push(sanitizeCedente(cedentes.cedente));
     }
     return cedente;
 }
 
 function getCessionaria(cessionarias){
-    const cessionaria = [];
-    if (Array.isArray(cessionarias)){
-        cessionaria = cessionarias.map(item => sanitizeCessionaria(item));
+    let cessionaria = [];
+    if (Array.isArray(cessionarias.cessionaria)){
+        cessionaria = cessionarias.cessionaria.map(item => sanitizeCessionaria(item));
     } else {
-        cessionaria.push(sanitizeCessionaria(cessionarias));
+        cessionaria.push(sanitizeCessionaria(cessionarias.cessionaria));
     }
     return cessionaria;
 }
@@ -75,8 +83,8 @@ function getCertificado(certificados){
 
 function sanitizeData(item) {
     
-    const cedente = getCedente(item['processo-contrato'].cedentes);
-    const cessionaria = getCessionaria(item['processo-contrato'].cessionarias);
+    const cedentes = getCedente(item['processo-contrato'].cedentes);
+    const cessionarias = getCessionaria(item['processo-contrato'].cessionarias);
     const certificado = getCertificado(item['processo-contrato'].certificados);
 
     return {
@@ -84,8 +92,8 @@ function sanitizeData(item) {
         dataProtocolo: item['processo-contrato'].dataProtocolo.$t,
         codigoDespacho: item.codigo,
         tituloDespacho: item.titulo,
-        cedente: cedente,
-        cessionaria: cessionaria,
+        cedentes: cedentes,
+        cessionarias: cessionarias,
         certificado: certificado,
     }
 }

@@ -15,7 +15,10 @@ async function start(){
     //console.log(despachos[despachos.length-1]['processo-contrato'].numero.$t);
     //console.log(despachos[despachos.length-1]['processo-contrato'].certificados);
     //console.log(despachos[despachos.length-1]['processo-contrato'].cedentes.cedente.endereco.pais.nome.$t);
-    console.log(dados);
+    // dados.forEach(element => {
+    //     console.log(element.cedente);
+    // });
+    console.log(dados[5]);
 }
 
 start();

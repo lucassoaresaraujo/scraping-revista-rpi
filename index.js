@@ -1,12 +1,16 @@
+const connection = require('./db/connection.js');
+
 const tasks = {
     extractData: require('./tasks/extractData.js'),
     downloadXml: require('./tasks/downloadXml.js'),
     convertXmlToObject: require('./tasks/convertXmlToObject.js'),
     filterDespachos: require('./tasks/filterDespachos.js'),
     sanitizeData: require('./tasks/sanitizeData.js'),
+    initializeDataBase: require('./tasks/initializeDataBase.js'),
 }
 
 async function start(){
+    const db = tasks.initializeDataBase(connection);
     const data = await tasks.extractData();
     const xml = await tasks.downloadXml(data);
     const objeto = tasks.convertXmlToObject(xml);

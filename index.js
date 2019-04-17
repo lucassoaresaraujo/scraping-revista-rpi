@@ -10,19 +10,17 @@ const tasks = {
 }
 
 async function start(){
-    const db = tasks.initializeDataBase(connection);
-    const data = await tasks.extractData();
-    const xml = await tasks.downloadXml(data);
-    const objeto = tasks.convertXmlToObject(xml);
-    const despachos = tasks.filterDespachos(objeto.revista.despacho);
-    const dados = tasks.sanitizeData(despachos);
-    //console.log(despachos[despachos.length-1]['processo-contrato'].numero.$t);
-    //console.log(despachos[despachos.length-1]['processo-contrato'].certificados);
-    //console.log(despachos[despachos.length-1]['processo-contrato'].cedentes.cedente.endereco.pais.nome.$t);
-    // dados.forEach(element => {
-    //     console.log(element.cedente);
-    // });
-    console.log(dados[5]);
+    try {        
+        const db = tasks.initializeDataBase(connection);    
+        const data = await tasks.extractData();    
+        const xml = await tasks.downloadXml(data);
+        const objeto = tasks.convertXmlToObject(xml);
+        const despachos = tasks.filterDespachos(objeto.revista.despacho);
+        const dados = tasks.sanitizeData(despachos);        
+        console.log(dados);
+    } catch (error) {
+        console.log(error.message);
+    }
 }
 
 start();

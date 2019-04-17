@@ -4,8 +4,12 @@ const $ = require('cheerio');
 const url = 'http://revistas.inpi.gov.br/rpi/';
 
 async function getPageHtmlFile(){
-    pageHtml = await rp(url);
-    return pageHtml;
+    try {    
+        pageHtml = await rp(url);
+        return pageHtml;
+    } catch (error) {        
+        throw new Error("Não foi possivel extrair os dados");
+    }
 }
 
 function getNumeroRevista(pageHtml){

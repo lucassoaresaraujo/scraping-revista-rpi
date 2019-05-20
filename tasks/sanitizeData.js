@@ -13,7 +13,7 @@ function sanitizeCessionaria(itemCessionaria){
     }
 }
 
-function sanitizePrazoVigencia(item){
+function sanitizePrazoVigencia(item){    
     if (item.certificado.prazoVigenciaPI != undefined ){
         return item.certificado.prazoVigenciaPI.$t;
     } else {

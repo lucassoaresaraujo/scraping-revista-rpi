@@ -17,9 +17,9 @@ async function start(){
         const objeto = tasks.convertXmlToObject(xml);
         const despachos = tasks.filterDespachos(objeto.revista.despacho);
         const dados = tasks.sanitizeData(despachos);        
-        console.log(dados);
+        //console.log(dados);
     } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
     }
 }
 

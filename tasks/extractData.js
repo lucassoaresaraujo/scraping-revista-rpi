@@ -16,14 +16,20 @@ function getNumeroRevista(pageHtml){
     return parseInt( $('tr.warning', pageHtml)[0].children[1].children[0].data );
 }
 
+function getDataPublicacao(pageHtml){
+    return $('tr.warning', pageHtml)[0].children[3].children[0].data.trim();
+}
+
 function getXmlUrl(pageHtml){
     return $('tr.warning', pageHtml)[0].children[7].children[1].children[3].attribs.href;
 }
 
 module.exports = async () => {
     const pageHtml = await getPageHtmlFile();
+    getDataPublicacao(pageHtml);
     return {
         xmlUrl: getXmlUrl(pageHtml),
-        numeroRevista: getNumeroRevista(pageHtml)
+        numeroRevista: getNumeroRevista(pageHtml),
+        dataPublicacao: getDataPublicacao(pageHtml)
     }
 }

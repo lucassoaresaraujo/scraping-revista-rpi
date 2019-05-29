@@ -6,7 +6,7 @@ module.exports = (sequelize, DataType) => {
             autoIncrement: true
         },
         numeroRevista: {
-            type: DataType.STRING(350),            
+            type: DataType.STRING(10),            
         },
         dataPublicacao: {
             type: DataType.DATEONLY,            

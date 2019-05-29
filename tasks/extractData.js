@@ -13,7 +13,7 @@ async function getPageHtmlFile(){
 }
 
 function getNumeroRevista(pageHtml){
-    return parseInt( $('tr.warning', pageHtml)[0].children[1].children[0].data );
+    return $('tr.warning', pageHtml)[0].children[1].children[0].data.trim();
 }
 
 function getDataPublicacao(pageHtml){

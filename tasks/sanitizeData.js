@@ -88,7 +88,7 @@ function sanitizeData(item) {
     const certificado = getCertificado(item['processo-contrato'].certificados);
 
     return {
-        numeroProcesso: item['processo-contrato'].numero.$t,
+        numeroProcesso: item['processo-contrato'].numero.$t.trim().replaceAll(" ", "").replaceAll("-", ""),
         dataProtocolo: item['processo-contrato'].dataProtocolo.$t,
         codigoDespacho: item.codigo,
         tituloDespacho: item.titulo,
@@ -98,6 +98,12 @@ function sanitizeData(item) {
     }
 }
 
+const replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
+
 module.exports = (despachos) => {
+    String.prototype.replaceAll = replaceAll;
     return despachos.map(itemDespacho => sanitizeData(itemDespacho));
 }

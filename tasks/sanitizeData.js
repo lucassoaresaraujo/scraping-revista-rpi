@@ -39,7 +39,7 @@ function sanitizeObservarcao(item){
 
 function sanitizeCertificado(itemCertificado){
     return {
-        numero: itemCertificado.certificado.numero.$t,
+        numero: itemCertificado.certificado.numero.$t.trim().replaceAll("/",""),
         naturezaDocumento: itemCertificado.certificado.naturezaDocumento.$t,
         textoObjeto: itemCertificado.certificado.textoObjeto.$t,
         siglaCategoria: itemCertificado.certificado.siglaCategoria.$t,

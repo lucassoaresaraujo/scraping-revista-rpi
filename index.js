@@ -23,7 +23,7 @@ async function start(){
             const despachos = tasks.filterDespachos(objeto.revista.despacho);
             const dados = tasks.sanitizeData(despachos);
             await tasks.storeData({db: db, data: dados});
-            console.log(dados);
+            //console.log(dados[0]);
         }
     } catch (error) {
         //console.log(error.message);

@@ -5,7 +5,6 @@ const robot = async content => {
       numeroRevista: content.data.numeroRevista
     }
   });
-  console.log(count);
   return count > 0;
 };
 

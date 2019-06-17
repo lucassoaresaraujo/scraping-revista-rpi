@@ -15,7 +15,6 @@ const store = async content => {
       transaction: transaction
     });
     for (let processo of processos) {
-      console.log("Numero Processo", processo.numeroProcesso);
       const processoSalvo = await revistaSalva.createProcesso(processo, {
         transaction: transaction
       });

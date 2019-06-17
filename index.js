@@ -37,9 +37,11 @@ async function start() {
       });
       tasks.createExcelFile(processos);
       await tasks.sendEmail(data);
+      console.log(`Finalizado revista ${data.numeroRevista}`);
     }
-    console.log(`Finalizado revista ${data.numeroRevista}`);
+    console.log(`Revista ${data.numeroRevista} já foi inserida anteriormente`);
   } catch (error) {
+    console.log(`Erro ao inserir revista ${data.numeroRevista}`);
     console.log(error);
   }
 }

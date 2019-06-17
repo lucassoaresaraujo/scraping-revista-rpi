@@ -18,10 +18,6 @@ async function start() {
   try {
     const db = tasks.initializeDataBase(connection);
     const data = await tasks.extractData();
-    // const data = {
-    //     numeroRevista: '2525',
-    //     dataPublicacao: '28/05/2019'
-    // };
     const isExistingRecord = await tasks.checkPreviously({
       db: db,
       data: data
@@ -30,7 +26,6 @@ async function start() {
       const xml = await tasks.downloadXml(data);
       const objeto = tasks.convertXmlToObject(xml);
       const despachos = tasks.filterDespachos(objeto.revista.despacho);
-      //console.log(despachos[0]);
       const processos = tasks.sanitizeData(despachos);
       await tasks.storeData({
         db: db,
@@ -41,9 +36,9 @@ async function start() {
         }
       });
       tasks.createExcelFile(processos);
-      // await tasks.sendEmail(data);
+      await tasks.sendEmail(data);
     }
-    console.log("Acabou");
+    console.log(`Finalizado revista ${data.numeroRevista}`);
   } catch (error) {
     console.log(error);
   }

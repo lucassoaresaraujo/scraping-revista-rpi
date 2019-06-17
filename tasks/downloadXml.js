@@ -41,7 +41,3 @@ module.exports = async data => {
   await unzipFile(data.numeroRevista);
   return getXml(data.numeroRevista);
 };
-
-// module.exports = async (data) => {
-//     return getXml(data.numeroRevista);
-// };

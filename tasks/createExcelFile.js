@@ -32,6 +32,25 @@ module.exports = content => {
     }
   });
 
+  ws.column(1).setWidth(20);
+  ws.column(2).setWidth(20);
+  ws.column(3).setWidth(20);
+  ws.column(4).setWidth(20);
+  ws.column(5).setWidth(40);
+  ws.column(6).setWidth(20);
+  ws.column(7).setWidth(48);
+  ws.column(8).setWidth(20);
+  ws.column(9).setWidth(55);
+  ws.column(10).setWidth(30);
+  ws.column(11).setWidth(30);
+  ws.column(12).setWidth(55);
+  ws.column(13).setWidth(25);
+  ws.column(14).setWidth(35);
+  ws.column(15).setWidth(35);
+  ws.column(16).setWidth(35);
+  ws.column(17).setWidth(35);
+  ws.column(18).setWidth(55);
+
   ws.cell(1, 1)
     .string("Nº PROCESSO")
     .style(styleHeader);

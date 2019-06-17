@@ -14,7 +14,7 @@ module.exports = async data => {
 
   let info = await transporter.sendMail({
     from: '"Lucas Soares" <lucassoaresaraujo271@gmail.com>',
-    to: "lucas.soares.araujo@hotmail.com", // lorentzrafa@gmail.com
+    to: "lucas.soares.araujo@hotmail.com, lorentzrafa@gmail.com", // lorentzrafa@gmail.com
     subject: `Revista ${data.numeroRevista}`,
     text: `Segue em anexo os contratos da Revista ${data.numeroRevista}`, // plain text body
     //html: "<b>O Trabalho de conclusão de curso foi entregue com sucesso</b>", // html body

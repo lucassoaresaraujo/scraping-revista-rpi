@@ -1,8 +1,7 @@
-
-function isCodigo350(despacho){
-    return despacho.codigo == 350;
+function isCodigo350(despacho) {
+  return despacho.codigo == 350;
 }
 
-module.exports = (listaDespachos) => {
-    return listaDespachos.filter(isCodigo350);
-}
+module.exports = listaDespachos => {
+  return listaDespachos.filter(isCodigo350);
+};

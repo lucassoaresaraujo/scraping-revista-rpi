@@ -1,33 +1,52 @@
-const connection = require('./db/connection.js');
+const connection = require("./db/connection.js");
+const moment = require("moment");
 
 const tasks = {
-    extractData: require('./tasks/extractData.js'),
-    downloadXml: require('./tasks/downloadXml.js'),
-    convertXmlToObject: require('./tasks/convertXmlToObject.js'),
-    filterDespachos: require('./tasks/filterDespachos.js'),
-    sanitizeData: require('./tasks/sanitizeData.js'),
-    initializeDataBase: require('./tasks/initializeDataBase.js'),
-    checkPreviously: require('./tasks/checkPreviously.js'),
-    storeData: require('./tasks/storeData.js') 
-}
+  extractData: require("./tasks/extractData.js"),
+  downloadXml: require("./tasks/downloadXml.js"),
+  convertXmlToObject: require("./tasks/convertXmlToObject.js"),
+  filterDespachos: require("./tasks/filterDespachos.js"),
+  sanitizeData: require("./tasks/sanitizeData.js"),
+  initializeDataBase: require("./tasks/initializeDataBase.js"),
+  checkPreviously: require("./tasks/checkPreviously.js"),
+  storeData: require("./tasks/storeData.js"),
+  createExcelFile: require("./tasks/createExcelFile.js"),
+  sendEmail: require("./tasks/sendEmail.js")
+};
 
-async function start(){
-    try {        
-        const db = tasks.initializeDataBase(connection);
-        const data = await tasks.extractData();
-        const isExistingRecord = await tasks.checkPreviously({db: db, data:data});
-        console.log(isExistingRecord);
-        if (!isExistingRecord) {
-            const xml = await tasks.downloadXml(data);
-            const objeto = tasks.convertXmlToObject(xml);
-            const despachos = tasks.filterDespachos(objeto.revista.despacho);
-            const dados = tasks.sanitizeData(despachos);
-            await tasks.storeData({db: db, data: dados});
-            //console.log(dados[0]);
+async function start() {
+  try {
+    const db = tasks.initializeDataBase(connection);
+    const data = await tasks.extractData();
+    // const data = {
+    //     numeroRevista: '2525',
+    //     dataPublicacao: '28/05/2019'
+    // };
+    const isExistingRecord = await tasks.checkPreviously({
+      db: db,
+      data: data
+    });
+    if (!isExistingRecord) {
+      const xml = await tasks.downloadXml(data);
+      const objeto = tasks.convertXmlToObject(xml);
+      const despachos = tasks.filterDespachos(objeto.revista.despacho);
+      //console.log(despachos[0]);
+      const processos = tasks.sanitizeData(despachos);
+      await tasks.storeData({
+        db: db,
+        processos: processos,
+        revista: {
+          numeroRevista: objeto.revista.numero,
+          dataPublicacao: moment(objeto.revista.dataPublicacao, "DD/MM/YYYY")
         }
-    } catch (error) {
-        //console.log(error.message);
+      });
+      tasks.createExcelFile(processos);
+      // await tasks.sendEmail(data);
     }
+    console.log("Acabou");
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 start();

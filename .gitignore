@@ -63,3 +63,5 @@ typings/
 #arquivos gerados
 *.zip
 arquivo/
+
+email.config.js

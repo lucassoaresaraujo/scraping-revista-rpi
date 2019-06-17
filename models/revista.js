@@ -17,7 +17,7 @@ module.exports = (sequelize, DataType) => {
     });
 
     Revista.associate = (models) => {
-        Revista.hasMany(models.processo, {foreignKey: 'revistaId'});
+        Revista.hasMany(models.processo, {foreignKey : 'revistaId'});
     }
 
     return Revista;

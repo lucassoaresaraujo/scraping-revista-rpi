@@ -13,7 +13,9 @@ module.exports = (sequelize, DataType) => {
         }    
     });
 
-    Cedente.associate = (models) => { }
+    Cedente.associate = (models) => {
+        Cedente.belongsToMany(models.processo, { as: 'Processos', through: 'processo_cedente'});
+     }
 
     return Cedente;
 };
